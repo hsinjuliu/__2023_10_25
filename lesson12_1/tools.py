@@ -1,7 +1,7 @@
 import random
 import csv
 
-def getRandom(txt_name:str='random.txt', get_cnt:int=1) -> list:
+def getStudents(txt_name:str='random.txt', get_cnt:int=1) -> list:
     '''
     getRandom
     txt_name: file name with format .txt, default is random.txt
@@ -31,8 +31,8 @@ def getRandom(txt_name:str='random.txt', get_cnt:int=1) -> list:
         return random.sample(datalist,get_cnt)
 
 
-def putRandomInt(origData:list,randomCnt:int) -> list:
-    #每個人隨機放n個分數
+def genScores(origData:list,randomCnt:int) -> list:
+    #每個人隨機放n個分數(分數0~100)
     data = []
     for name in origData:
         name_sbj = [name]
@@ -43,16 +43,38 @@ def putRandomInt(origData:list,randomCnt:int) -> list:
     return data
         
 
-def saveToCSV(fileName:str,title:list[str],data:list[list]) ->list[list]:
+def saveListToCSV(fileName:str,title:list[str],data:list[list]) ->list[list]:
     fileName += ".csv"
-    print("檔案名稱",fileName)
+    print(f"檔案名稱:{fileName}")
+    print(f"欄位名稱:{title}")
     print(f"資料:{data}")
 
     try:
         with open(fileName,mode='w',encoding='utf-8',newline='') as file:
             writer=csv.writer(file)
-            writer.writerow(title)
+
+            if title != None:
+                writer.writerow(title)
+
             writer.writerows(data)
+        return True
+    except:
+        return False
+    else:
+        return False
+    
+def saveDictToCSV(fileName:str,title:list[str],data:list[dict],isWriteHeader:str):
+    fileName += ".csv"
+    print(f"檔案名稱:{fileName}")
+    print(f"欄位名稱:{title}")
+    print(f"資料:{data}")
+
+    try:
+        with open(fileName,mode='w',encoding='utf-8',newline='') as file:
+            dicWriter=csv.DictWriter(file,title)
+            if isWriteHeader == "Y":
+                dicWriter.writeheader()
+            dicWriter.writerows(data)
         return True
     except:
         return False

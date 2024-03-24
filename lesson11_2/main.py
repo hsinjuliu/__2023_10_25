@@ -1,7 +1,7 @@
 import random
 import csv
 import pyinputplus as pyip
-from packageName.tools import getRandom,saveToCSV,putRandomInt
+from tools import getRandom,saveToCSV,putRandomInt
 
 '''
 main.py:
@@ -21,16 +21,13 @@ if __name__ == '__main__':
 
     #每個人隨機放n個分數
     data = putRandomInt(result, get_sbj_cnt)
-        
+    
     #設定column name
-    '''測試存檔失敗
-    title=None
-    '''
     sbjs = [f"科目{i+1}" for i in range(get_sbj_cnt)]
     title=["姓名"]
     title.extend(sbjs)
 
-
+    #存檔
     fileName=pyip.inputFilename("請輸入檔案名稱(不用輸入副檔名)")
 
     if saveToCSV(fileName,title,data):
